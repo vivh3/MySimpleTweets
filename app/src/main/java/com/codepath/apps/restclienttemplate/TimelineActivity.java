@@ -3,13 +3,18 @@ package com.codepath.apps.restclienttemplate;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
@@ -26,12 +31,14 @@ import java.util.ArrayList;
 import cz.msebera.android.httpclient.Header;
 
 public class TimelineActivity extends AppCompatActivity {
+    private SwipeRefreshLayout swipeContainer;
 
     // for the home toolbar
     Toolbar toolbar;
     TextView toolbar_title;
     ImageView toolbar_image;
     User user;
+    MenuItem miActionProgressItem;
 
     private TwitterClient client;
     TweetAdapter tweetAdapter;
@@ -64,8 +71,8 @@ public class TimelineActivity extends AppCompatActivity {
         // find the toolbar view from the activity layout
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         // sets Toolbar as ActionBar for this activity, sets title to home
-        //setSupportActionBar(toolbar);
-        //getSupportActionBar().setTitle("");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
         toolbar_title = (TextView) findViewById(R.id.toolbar_title);
         toolbar_image = (ImageView) findViewById(R.id.toolbar_image);
 
@@ -77,7 +84,61 @@ public class TimelineActivity extends AppCompatActivity {
                 composeMessage(null);
             }
         });
+
+        // Lookup the swipe container view
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to refresh the list here.
+                // Make sure you call swipeContainer.setRefreshing(false)
+                // once the network request has completed successfully.
+                fetchTimelineAsync(0);
+                swipeContainer.setRefreshing(false);
+            }
+        });
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+        }
+
+    public void fetchTimelineAsync(int page) {
+        // Send the network request to fetch the updated data
+        // `client` here is an instance of Android Async HTTP
+        // getHomeTimeline is an example endpoint.
+        client.getHomeTimeline(new JsonHttpResponseHandler() {
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response){
+                // Remember to CLEAR OUT old items before appending in the new ones
+                tweetAdapter.clear();
+                tweets.clear();
+                // ...the data has come back, add new items to your adapter...
+                for (int i = 0; i < response.length(); i++) {
+                    // convert each object to a Tweet model
+                    // add the Tweet model to our data source
+                    // notify the adapter that we've added an item
+                    Tweet tweet = null;
+                    try {
+                        tweet = Tweet.fromJSON(response.getJSONObject(i));
+                        tweets.add(tweet);
+                        tweetAdapter.notifyItemInserted(tweets.size() - 1);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                tweetAdapter.addAll(tweets);
+                // Now we call setRefreshing(false) to signal refresh has finished
+                swipeContainer.setRefreshing(false);
+            }
+
+            public void onFailure(Throwable e) {
+                Log.d("DEBUG", "Fetch timeline error: " + e.toString());
+            }
+        });
     }
+
 
     public void composeMessage(String text) {
         Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
@@ -143,5 +204,27 @@ public class TimelineActivity extends AppCompatActivity {
                 throwable.printStackTrace();
             }
         });
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        final MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_timeline, menu);
+        // Store instance of the menu item containing progress
+        miActionProgressItem = menu.findItem(R.id.miActionProgress);
+        // Extract the action-view from the menu item
+        ProgressBar v =  (ProgressBar) miActionProgressItem.getActionView();
+        // Return to finish
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    public void showProgressBar() {
+        // Show progress item
+        miActionProgressItem.setVisible(true);
+    }
+
+    public void hideProgressBar() {
+        // Hide progress item
+        miActionProgressItem.setVisible(false);
     }
 }

@@ -18,6 +18,14 @@ public class Tweet {
     public long uid; // database ID for the tweet
     public User user;
     public String createdAt;
+    public String screenName;
+    public int rtCount;
+    public int favCount;
+    public boolean favorited;
+    public boolean retweeted;
+    public boolean hasEntities;
+    public boolean hasMedia;
+    public String mediaUrl;
 
     // empty constructor needed by the Parceler library
     public Tweet() {}
@@ -27,10 +35,23 @@ public class Tweet {
         Tweet tweet = new Tweet();
 
         // extract the values from JSON
-        tweet.body = jsonObject.getString("text");
+        tweet.body = jsonObject.getString("full_text");
         tweet.uid = jsonObject.getLong("id");
         tweet.createdAt = getRelativeTimeAgo(jsonObject.getString("created_at"));
         tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
+        tweet.screenName = "@" + tweet.user.screenName;
+        tweet.rtCount = jsonObject.getInt("retweet_count");
+        tweet.favCount = jsonObject.getInt("favorite_count");
+        tweet.favorited = false;
+        tweet.retweeted = false;
+        tweet.hasEntities = jsonObject.has("entities");
+        tweet.hasMedia = jsonObject.getJSONObject("entities").has("media");
+        if (tweet.hasEntities && tweet.hasMedia) {
+            String url = jsonObject.getJSONObject("entities").getJSONArray("media").getJSONObject(0).getString("media_url");
+            tweet.mediaUrl = url + ":large";
+        }
+        else tweet.mediaUrl = null;
+
         return tweet;
     }
 

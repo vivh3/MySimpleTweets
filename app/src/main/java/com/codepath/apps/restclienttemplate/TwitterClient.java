@@ -1,6 +1,7 @@
 package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.codepath.oauth.OAuthBaseClient;
 import com.github.scribejava.apis.TwitterApi;
@@ -48,8 +49,60 @@ public class TwitterClient extends OAuthBaseClient {
 		RequestParams params = new RequestParams();
 		params.put("count", 26); // 25 in CodePath tutorial
 		params.put("since_id", 1);
+		params.put("tweet_mode","extended");
 		client.get(apiUrl, params, handler);
 	}
+
+    public void getTweetInfo(Long tweetId, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("statuses/show.json");
+        // Can specify query string params directly or through RequestParams.
+        RequestParams params = new RequestParams();
+        params.put("id", tweetId);
+        client.get(apiUrl, params, handler);
+    }
+
+	public void getMentionsTimeline(AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/mentions_timeline.json");
+		// Can specify query string params directly or through RequestParams.
+		RequestParams params = new RequestParams();
+		params.put("count", 25);
+		params.put("since_id", 1);
+		client.get(apiUrl, params, handler);
+	}
+
+	public void getUserTimeline(String screenName, AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/user_timeline.json");
+		// Can specify query string params directly or through RequestParams.
+		RequestParams params = new RequestParams();
+		params.put("screen_name", screenName);
+		params.put("count", 25);
+		client.get(apiUrl, params, handler);
+	}
+
+	public void getProfileInfo(AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("account/verify_credentials.json");
+		// Can specify query string params directly or through RequestParams.
+		RequestParams params = new RequestParams();
+		client.get(apiUrl, params, handler);
+	}
+
+	public void getUserInfo(String screenName, AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("users/show.json");
+		// Can specify query string params directly or through RequestParams.
+		RequestParams params = new RequestParams();
+		params.put("screen_name", screenName);
+		client.get(apiUrl, params, handler);
+	}
+
+	public void extendTimeline(String timelineType, long last_tweet_id, AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/" + timelineType + "_timeline.json");
+		// Can specify query string params directly or through RequestParams.
+		RequestParams params = new RequestParams();
+		params.put("count", 25);
+		params.put("max_id", last_tweet_id);
+		client.get(apiUrl, params, handler);
+	}
+
 
 
 	/* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint
@@ -68,4 +121,37 @@ public class TwitterClient extends OAuthBaseClient {
         params.put("status", message);
         client.post(apiUrl, params, handler);
     }
+
+    public void retweet(long tweetId, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("statuses/retweet/" + tweetId + ".json");
+        RequestParams params = new RequestParams();
+        params.put("id", tweetId);
+        client.post(apiUrl, params, handler);
+        Log.d("retweet", "sent");
+    }
+
+    public void unretweet(long tweetId, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("statuses/unretweet/" + tweetId + ".json");
+        RequestParams params = new RequestParams();
+        params.put("id", tweetId);
+        client.post(apiUrl, params, handler);
+        Log.d("unretweet", "sent");
+    }
+
+    public void favorite(long tweetId, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("/favorites/create.json");
+        RequestParams params = new RequestParams();
+        params.put("id", tweetId);
+        client.post(apiUrl, params, handler);
+        Log.d("favorite", "sent");
+    }
+
+    public void unfavorite(long tweetId, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("/favorites/destroy.json");
+        RequestParams params = new RequestParams();
+        params.put("id", tweetId);
+        client.post(apiUrl, params, handler);
+        Log.d("unfavorite", "sent");
+    }
+
 }

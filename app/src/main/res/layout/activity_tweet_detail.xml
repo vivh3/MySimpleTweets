@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <RelativeLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.codepath.apps.restclienttemplate.TweetDetailActivity">
+
+
+        <RelativeLayout
+            android:id="@+id/retweetBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/toolbar"
+            android:visibility="invisible">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/body"
+            android:layout_below="@+id/toolbar"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+
+            >
+            <TextView
+                android:id="@+id/tvNameDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:layout_toEndOf="@+id/ivProfileImageDetails"
+                android:text="TextView"
+                android:layout_marginLeft="8dp"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/ivProfileImageDetails"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignTop="@+id/tvNameDetails"
+                android:layout_marginStart="0dp"
+                app:srcCompat="@drawable/ic_vector_person" />
+
+            <TextView
+                android:id="@+id/tvScreenNameDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/tvNameDetails"
+                android:layout_below="@+id/tvNameDetails"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/tvBodyDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/ivProfileImageDetails"
+                android:layout_below="@+id/ivProfileImageDetails"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:text="TextView"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tvCreatedAtDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/tvBodyDetails"
+                android:layout_below="@+id/ivFirstImage"
+                android:text="TextView"
+                android:layout_marginTop="10dp"
+                android:textSize="13sp" />
+
+            <ImageView
+                android:id="@+id/ivFirstImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvBodyDetails"
+                android:layout_marginTop="8dp"
+                android:adjustViewBounds="true"
+                android:cropToPadding="false"
+                app:srcCompat="@drawable/placeholder" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/body"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:id="@+id/actionButtons">
+
+
+            <ImageView
+                android:id="@+id/ivReplyDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="2dp"
+                android:adjustViewBounds="true"
+                android:cropToPadding="false"
+                app:srcCompat="@drawable/reply_black" />
+
+            <ImageView
+                android:id="@+id/ivRetweetDetails"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignTop="@+id/ivReplyDetails"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/ic_vector_retweet" />
+
+            <ImageView
+                android:layout_marginRight="0dp"
+                android:id="@+id/ivFavoriteDetails"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                app:srcCompat="@drawable/ic_vector_heart"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/actionButtons"
+            android:id="@+id/relativeLayout2"
+            android:layout_marginLeft="12px"
+            android:layout_marginRight="12px">
+
+        </RelativeLayout>
+
+
+
+    </RelativeLayout>
+</ScrollView>
+
+

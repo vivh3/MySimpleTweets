@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="twitter_blue">#801da1f2</color>
-    <color name="white">#FFFFFF</color>
+    <color name="twitter_blue">#1DA1F2</color>
+    <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+    <color name="gray">#ffaab8c2</color>
     <color name="accent">#248ff1</color>
+    <color name="icon_gray">#777777</color>
+    <color name="icon_pink">#dd0f5a</color>
+    <color name="icon_green">#23af2c</color>
+    <color name="icon_white">#eaf3ff</color>
 </resources>

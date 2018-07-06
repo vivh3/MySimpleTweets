@@ -2,17 +2,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_margin="5dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent" android:layout_height="wrap_content">
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:id="@+id/itemTweet" >
 
     <TextView
-        android:id="@+id/tvUserName"
+        android:id="@+id/tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/tvBody"
         android:text="TextView"
+        android:textColor="@color/black"
+        android:textSize="15sp"
         android:textStyle="bold" />
-
 
     <ImageView
         android:id="@+id/ivProfileImage"
@@ -22,15 +24,17 @@
         android:layout_alignParentTop="true"
         app:srcCompat="@android:color/black" />
 
-
-
     <TextView
         android:id="@+id/tvBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvUserName"
+        android:layout_below="@+id/tvName"
         android:layout_marginLeft="5dp"
         android:layout_toEndOf="@+id/ivProfileImage"
+        android:autoLink="all"
+        android:linksClickable="true"
+        android:textColor="@color/black"
+        android:textColorLink="@color/black"
         android:text="TextView" />
 
     <TextView
@@ -47,5 +51,81 @@
         android:textSize="10sp"
         android:textStyle="italic" />
 
+    <ImageView
+        android:id="@+id/ivMedia"
+        android:layout_width="300dp"
+        android:layout_height="150dp"
+        android:layout_alignStart="@+id/tvBody"
+        android:layout_below="@+id/tvBody"
+        android:scaleType="centerCrop"
+        app:srcCompat="@color/gray" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:layout_below="@+id/ivMedia"
+        android:layout_alignStart="@+id/tvName"
+        android:layout_alignEnd="@+id/ivMedia">
+
+        <ImageView
+            android:id="@+id/ivReply"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:clickable="true"
+            android:tint="@color/gray"
+            app:srcCompat="@drawable/reply"
+            android:layout_below="@+id/ivMedia"
+            android:layout_alignStart="@+id/ivMedia" />
+
+        <ImageView
+            android:id="@+id/ivRetweet"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:adjustViewBounds="true"
+            android:clickable="true"
+            android:layout_marginLeft="25dp"
+            android:scaleType="centerInside"
+            android:tint="@color/gray"
+            app:srcCompat="@drawable/ic_vector_retweet"
+            android:layout_below="@+id/ivMedia"
+            android:layout_toStartOf="@+id/tvName" />
+
+        <TextView
+            android:id="@+id/tvRtCount"
+            android:layout_width="35dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="5dp"
+            android:text="TextView"
+            android:layout_alignTop="@+id/ivRetweet"
+            android:layout_alignStart="@+id/tvName"
+            android:layout_toEndOf="@+id/ivRetweet"/>
+
+        <ImageView
+            android:id="@+id/ivFavorite"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:adjustViewBounds="true"
+            android:tint="@color/gray"
+            android:clickable="true"
+            android:layout_marginLeft="10dp"
+            app:srcCompat="@drawable/ic_vector_heart"
+            android:scaleType="centerInside"
+            android:layout_below="@+id/ivMedia"
+            android:layout_toStartOf="@+id/tvFavCount" />
+
+        <TextView
+            android:id="@+id/tvFavCount"
+            android:layout_width="35dp"
+            android:layout_height="20dp"
+            android:text="TextView"
+            android:layout_marginLeft="5dp"
+            android:textAlignment="textEnd"
+            android:layout_below="@+id/ivMedia"
+            android:layout_toEndOf="@+id/tvTimeCreated"
+            android:layout_marginStart="19dp" />
+
+
+    </LinearLayout>
 
 </RelativeLayout>
