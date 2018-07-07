@@ -146,6 +146,12 @@ public class TimelineActivity extends AppCompatActivity {
         startActivityForResult(i, REQUEST_CODE);
     }
 
+/*    public void replyMessage(String text) {
+        Intent i = new Intent(TimelineActivity.this, ReplyActivity.class);
+        i.putExtra("text", text);
+        startActivityForResult(i, REQUEST_CODE);
+    }*/
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // check request code and result code first
@@ -167,10 +173,6 @@ public class TimelineActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-//                Log.d("TwitterClient", response.toString());
-                // iterate through the JSON array
-                // for each entry, deserialize the JSON object
-
                 for (int i = 0; i < response.length(); i++) {
                     // convert each object to a Tweet model
                     // add the Tweet model to our data source

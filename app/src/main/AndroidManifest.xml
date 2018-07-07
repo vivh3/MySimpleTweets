@@ -36,7 +36,7 @@
         <activity android:name=".TimelineActivity" />
         <activity android:name=".ComposeActivity" />
         <activity android:name=".TweetDetailActivity" />
-        //<activity android:name=".RetweetActivity" />
+        //<activity android:name=".models.RetweetActivity" />
         <activity android:name=".ReplyActivity"></activity>
     </application>
 

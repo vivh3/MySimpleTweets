@@ -116,7 +116,8 @@
                 android:layout_marginTop="2dp"
                 android:adjustViewBounds="true"
                 android:cropToPadding="false"
-                app:srcCompat="@drawable/reply_black" />
+                android:tint="@color/gray"
+                app:srcCompat="@drawable/reply" />
 
             <ImageView
                 android:id="@+id/ivRetweetDetails"
@@ -126,14 +127,16 @@
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:scaleType="fitXY"
-                app:srcCompat="@drawable/ic_vector_retweet" />
+                android:tint="@color/gray"
+                app:srcCompat="@drawable/ic_vector_retweet_stroke" />
 
             <ImageView
                 android:layout_marginRight="0dp"
                 android:id="@+id/ivFavoriteDetails"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                app:srcCompat="@drawable/ic_vector_heart"
+                app:srcCompat="@drawable/ic_vector_heart_stroke"
+                android:tint="@color/gray"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true" />
 

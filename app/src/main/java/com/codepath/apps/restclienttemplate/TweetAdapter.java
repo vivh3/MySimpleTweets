@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,16 +14,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.models.RetweetActivity;
 import com.codepath.apps.restclienttemplate.models.Tweet;
-import com.loopj.android.http.JsonHttpResponseHandler;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.parceler.Parcels;
 
 import java.util.List;
-
-import cz.msebera.android.httpclient.Header;
 
 public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> {
 
@@ -115,74 +108,6 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
                 context.startActivity(i);
             }
         });
-
-        holder.ivFavorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                client = TwitterApp.getRestClient(context);
-                if (!tweet.favorited) {
-                    client.favorite(tweet.uid, new JsonHttpResponseHandler() {
-                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                            try {
-                                holder.ivFavorite.setImageResource(R.drawable.ic_vector_heart);
-                                Tweet tweet = Tweet.fromJSON(response);
-                                holder.tvFavCount.setText(String.valueOf(tweet.favCount));
-                                tweet.favorited = true;
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                            super.onFailure(statusCode, headers, throwable, errorResponse);
-                        }
-
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                            super.onFailure(statusCode, headers, throwable, errorResponse);
-                        }
-
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                            Log.d("TwitterClient", responseString);
-                            throwable.printStackTrace();
-                        }
-                    });
-                }
-                else {
-                    client.favorite(tweet.uid, new JsonHttpResponseHandler() {
-                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                            try {
-                                holder.ivFavorite.setImageResource(R.drawable.ic_vector_heart_stroke);
-                                Tweet tweet = Tweet.fromJSON(response);
-                                //   holder.tvFavCount.setText(String.valueOf(tweet.favCount));
-                                tweet.favorited = false;
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                            Log.d("TwitterClient", responseString);
-                            throwable.printStackTrace();
-                        }
-
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                            Log.d("TwitterClient", errorResponse.toString());
-                            throwable.printStackTrace();
-                        }
-
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                            super.onFailure(statusCode, headers, throwable, errorResponse);
-                        }
-                    });
-                }
-            }
-        });
-
     }
 
 
@@ -192,24 +117,6 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
     }
 
     // create ViewHolder class
-
-/*    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public ImageView ivProfileImage;
-        public TextView tvUsername;
-        public TextView tvBody;
-        public TextView tvCreatedAt;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-
-            // perform findViewById lookups
-
-            ivProfileImage = (ImageView) itemView.findViewById(R.id.ivProfileImage);
-            tvUsername = (TextView) itemView.findViewById(R.id.tvUserName);
-            tvBody = (TextView) itemView.findViewById(R.id.tvBody);
-            tvCreatedAt = (TextView) itemView.findViewById(R.id.tvCreatedAt);
-        }
-    }*/
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -261,14 +168,12 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
                 @Override
                 public void onClick (View v) {
                     ivRetweet.setImageResource(R.drawable.ic_vector_retweet);
-                    Intent i = new Intent(context, ComposeActivity.class);
+                    Intent i = new Intent(context, RetweetActivity.class);
                 }
             });
 
-
         }
     }
-
 
 
     // Clean all elements of the recycler

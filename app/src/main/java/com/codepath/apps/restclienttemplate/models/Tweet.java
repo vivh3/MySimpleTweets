@@ -35,11 +35,11 @@ public class Tweet {
         Tweet tweet = new Tweet();
 
         // extract the values from JSON
-        tweet.body = jsonObject.getString("full_text");
+        tweet.body = jsonObject.getString("text");
         tweet.uid = jsonObject.getLong("id");
         tweet.createdAt = getRelativeTimeAgo(jsonObject.getString("created_at"));
         tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
-        tweet.screenName = "@" + tweet.user.screenName;
+        tweet.screenName = tweet.user.screenName;
         tweet.rtCount = jsonObject.getInt("retweet_count");
         tweet.favCount = jsonObject.getInt("favorite_count");
         tweet.favorited = false;

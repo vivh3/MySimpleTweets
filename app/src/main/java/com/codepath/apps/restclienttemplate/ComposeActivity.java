@@ -16,12 +16,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcels;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
 
 public class ComposeActivity extends AppCompatActivity {
 
-    EditText etTweetBody;
-    Button btTweet;
+    @BindView(R.id.etTweetBody) EditText etTweetBody;
+    @BindView(R.id.btTweet) Button btTweet;
 
     private TwitterClient client;
 
@@ -32,8 +34,7 @@ public class ComposeActivity extends AppCompatActivity {
 
         client = TwitterApp.getRestClient(this);
 
-        etTweetBody = (EditText) findViewById(R.id.etTweetBody);
-        btTweet = (Button) findViewById(R.id.btTweet);
+        ButterKnife.bind(this);
         btTweet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -16,13 +16,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcels;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
 
 
 public class ReplyActivity extends AppCompatActivity {
 
-    EditText etTweetBody;
-    Button btTweet;
+    @BindView(R.id.etTweetBody) EditText etTweetBody;
+    @BindView(R.id.btTweet) Button btTweet;
+
 
     private TwitterClient client;
 
@@ -33,11 +36,10 @@ public class ReplyActivity extends AppCompatActivity {
 
         client = TwitterApp.getRestClient(this);
 
-        btTweet = (Button) findViewById(R.id.btTweet);
-        etTweetBody = (EditText) findViewById(R.id.etTweetBody);
+        ButterKnife.bind(this);
 
         String screenName = getIntent().getStringExtra("screenName");
-        etTweetBody.append("@" + screenName + " ");
+        etTweetBody.append(screenName + " ");
 
         btTweet.setOnClickListener(new View.OnClickListener() {
             @Override

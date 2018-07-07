@@ -49,7 +49,6 @@ public class TwitterClient extends OAuthBaseClient {
 		RequestParams params = new RequestParams();
 		params.put("count", 26); // 25 in CodePath tutorial
 		params.put("since_id", 1);
-		params.put("tweet_mode","extended");
 		client.get(apiUrl, params, handler);
 	}
 
@@ -136,22 +135,6 @@ public class TwitterClient extends OAuthBaseClient {
         params.put("id", tweetId);
         client.post(apiUrl, params, handler);
         Log.d("unretweet", "sent");
-    }
-
-    public void favorite(long tweetId, AsyncHttpResponseHandler handler) {
-        String apiUrl = getApiUrl("/favorites/create.json");
-        RequestParams params = new RequestParams();
-        params.put("id", tweetId);
-        client.post(apiUrl, params, handler);
-        Log.d("favorite", "sent");
-    }
-
-    public void unfavorite(long tweetId, AsyncHttpResponseHandler handler) {
-        String apiUrl = getApiUrl("/favorites/destroy.json");
-        RequestParams params = new RequestParams();
-        params.put("id", tweetId);
-        client.post(apiUrl, params, handler);
-        Log.d("unfavorite", "sent");
     }
 
 }
